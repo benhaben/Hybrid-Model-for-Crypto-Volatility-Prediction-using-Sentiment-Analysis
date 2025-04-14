@@ -41,7 +41,7 @@ This project is designed to forecast cryptocurrency market volatility by integra
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 1. Clone the repo:
 
@@ -75,18 +75,18 @@ REDDIT_USER_AGENT=your_user_agent
 
 ## 🧪 How It Works
 
-### 🟠 Data Collection
+###  Data Collection
 
 - Reddit data is scraped using `PRAW` for crypto-related subreddits like `r/Bitcoin`, `r/Crypto`, etc.
 - Historical price data is fetched from CoinGecko API.
 
-### 🟡 Sentiment Analysis
+### Sentiment Analysis
 
 - Reddit `title` and `body` text is preprocessed using regex.
 - `DistilBERT` model fine-tuned on SST-2 is used to score sentiment for each post.
 - Scores are normalized between [-1, 1] and aggregated daily.
 
-### 🔵 Market Data Engineering
+### Market Data Engineering
 
 - Price and volume data is processed for volatility using rolling standard deviation of returns.
 - Lagged features (1 to 7 days) are generated for market and sentiment trends.
@@ -94,7 +94,7 @@ REDDIT_USER_AGENT=your_user_agent
 
 ---
 
-## 🎯 Model Selection & Training
+## Model Selection & Training
 
 The model training process consists of:
 - **Feature Engineering:** From sentiment scores (title & description), market returns, volume & volatility, lag features, and trend indicators.
@@ -116,7 +116,7 @@ We explored multiple modeling strategies, comparing traditional statistical mode
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ### 1. Run the pipeline (to update data)
 
