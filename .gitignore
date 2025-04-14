@@ -1,0 +1,30 @@
+# Byte-compiled / virtual environment
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+env/
+venv/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Environment files
+.env
+
+# Mac/Linux system files
+.DS_Store
+
+# VSCode or PyCharm project files
+.vscode/
+.idea/
+
+# Model files
+*.joblib
+*.pkl
+
+# Logs and cache
+*.log
+.cache/

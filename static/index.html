@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Volatility Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="/static/script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>📈 Cryptocurrency Volatility Dashboard</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#historical-data">Historical Data</a></li>
+                <li><a href="#volatility-forecast">Volatility Forecast</a></li>
+                <li><a href="#sentiment-analysis">Sentiment Analysis</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="historical-data">
+            <h2>📊 Historical Price & Sentiment Data</h2>
+            <div class="chart-container">
+                <canvas id="historicalChart" aria-label="Historical Price and Sentiment Chart"></canvas>
+            </div>
+        </section>
+
+        <section id="volatility-forecast">
+            <h2>🔮 24-Hour Volatility Forecast</h2>
+            <div id="forecast-result" class="result-box">Loading...</div>
+        </section>
+
+        <section id="sentiment-analysis">
+            <h2>🧠 Sentiment Analysis</h2>
+            <div id="sentiment-result" class="result-box">Loading...</div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Crypto Volatility Prediction by Somya Jain</p>
+    </footer>
+</body>
+</html>
