@@ -22,8 +22,6 @@ venv/
 .idea/
 
 # Model files
-*.joblib
-*.pkl
 
 # Logs and cache
 *.log
