@@ -156,4 +156,4 @@ Then visit `http://127.0.0.1:5000` in your browser.
 - Schedule automated retraining with Airflow
 - Deploy to cloud (Render, AWS EC2, or Vercel)
 
-> Developed with 💡 by Somya Jain
+> Developed with 💡 by Hansen

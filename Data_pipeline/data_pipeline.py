@@ -23,6 +23,8 @@ load_dotenv()
 REDDIT_API_ID = os.getenv("REDDIT_CLIENT_ID")
 REDDIT_API_KEY = os.getenv("REDDIT_CLIENT_SECRET")
 REDDIT_APP_NAME = os.getenv("REDDIT_USER_AGENT")
+REDDIT_USERNAME = os.getenv("REDDIT_USERNAME")
+REDDIT_PASSWORD = os.getenv("REDDIT_PASSWORD")
 
 # Initialize NLP components
 text_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased-finetuned-sst-2-english')
@@ -75,8 +77,16 @@ def get_reddit_posts(subreddit_name, post_limit=100):
         reddit_api = praw.Reddit(
             client_id=REDDIT_API_ID,
             client_secret=REDDIT_API_KEY,
-            user_agent=REDDIT_APP_NAME
+            user_agent=REDDIT_APP_NAME,
+            username=REDDIT_USERNAME,
+            password=REDDIT_PASSWORD,
         )
+
+        try:
+            print("当前登录用户为：", reddit_api.user.me())
+        except Exception as e:
+            print("登录失败，错误信息如下：")
+            print(e)
         target_subreddit = reddit_api.subreddit(subreddit_name)
         post_data = []
 
