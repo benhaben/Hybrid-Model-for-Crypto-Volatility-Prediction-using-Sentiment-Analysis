@@ -37,9 +37,9 @@ def update_data():
     except Exception as e:
         logging.error(f"Error updating data: {str(e)}")
 
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(func=update_data, trigger="interval", hours=1)
-# scheduler.start()
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=update_data, trigger="interval", hours=1)
+scheduler.start()
 
 
 @app.route('/', methods=['GET'])
@@ -93,4 +93,4 @@ def get_sentiment_analysis():
 if __name__ == '__main__':
     update_data() 
     data.to_csv('final.csv')
-    app.run(debug=True, use_reloader=False, port=8001)
+    app.run(debug=True, use_reloader=False, port=8001, host='0.0.0.0')
