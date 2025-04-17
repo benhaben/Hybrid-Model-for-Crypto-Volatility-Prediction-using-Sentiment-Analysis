@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request  # 新增 request
 from flask_cors import CORS
 from apscheduler.schedulers.background import BackgroundScheduler
 import pandas as pd
@@ -8,6 +8,9 @@ from Data_pipeline.data_pipeline import process_dataset
 from datetime import datetime, timedelta
 import logging
 import os
+import numpy as np  # 确保全局导入
+import nltk
+nltk.download('vader_lexicon')
 
 app = Flask(__name__, static_folder='static')
 CORS(app)
@@ -89,6 +92,69 @@ def get_sentiment_analysis():
         })
     else:
         return jsonify({'error': 'No sentiment data available'}), 404
+
+@app.route('/api/article_analysis', methods=['POST'])
+def analyze_article():
+    try:
+        # 数据验证与解析
+        req_data = request.get_json()
+        if not req_data or 'content' not in req_data:
+            logging.warning("Invalid article payload received")
+            return jsonify({'error': 'Missing article content'}), 400
+            
+        # 文本预处理（示例实现）
+        article_content = req_data['content']
+        clean_content = preprocess_text(article_content)  # 需实现预处理函数
+        
+        # 情感分析（集成现有数据管道）
+        sentiment_score = calculate_sentiment(clean_content)  # 示例函数
+        
+        # 波动性关联分析（结合现有模型）
+        # prediction_input = build_prediction_features(sentiment_score)  # 特征工程
+        # volatility_pred = volatility_model.predict(prediction_input)[0]
+
+        # # 记录分析结果
+        # logging.info(f"Article analysis completed | Sentiment: {sentiment_score} | Volatility: {volatility_pred}")
+        
+        return jsonify({
+            'sentiment_score': float(sentiment_score),
+            # 'volatility_impact': float(volatility_pred),
+            # 'analysis_result': classify_impact(sentiment_score, volatility_pred),
+            'processed_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        })
+        
+    except Exception as e:
+        logging.error(f"Article analysis failed: {str(e)}", exc_info=True)
+        return jsonify({'error': 'Analysis engine failure'}), 500
+
+# 文本预处理（参考网页6的数据处理逻辑）
+def preprocess_text(text):
+    import re
+    from nltk.sentiment import SentimentIntensityAnalyzer
+    # 清洗特殊字符
+    clean_text = re.sub(r'[^\w\s]', '', text)
+    # 情感分析器初始化
+    return clean_text.lower().strip()
+
+# 情感计算（扩展网页3的验证逻辑）
+def calculate_sentiment(text):
+    from nltk.sentiment.vader import SentimentIntensityAnalyzer
+    sia = SentimentIntensityAnalyzer()
+    return sia.polarity_scores(text)['compound']
+
+# 特征工程（结合网页7的数据接口方案）
+def build_prediction_features(sentiment):
+    global data
+    market_features = data[['bitcoin_price', 'bitcoin_volume']].tail(1).values
+    return np.concatenate([market_features, [[sentiment]]], axis=1)
+
+# 影响分类（自定义业务逻辑）
+def classify_impact(sentiment, volatility):
+    if sentiment < -0.5 and volatility > 0.3:
+        return "High Negative Impact"
+    elif sentiment > 0.5 and volatility < 0.1:
+        return "Stable Positive"
+    return "Neutral"
 
 if __name__ == '__main__':
     update_data() 
