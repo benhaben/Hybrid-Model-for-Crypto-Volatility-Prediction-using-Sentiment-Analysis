@@ -120,7 +120,8 @@ def analyze_article():
             'sentiment_score': float(sentiment_score),
             # 'volatility_impact': float(volatility_pred),
             # 'analysis_result': classify_impact(sentiment_score, volatility_pred),
-            'processed_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            'processed_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+             "key":["BTC"]
         })
         
     except Exception as e:
